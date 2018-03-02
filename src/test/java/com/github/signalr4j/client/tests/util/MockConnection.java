@@ -23,6 +23,7 @@ import com.github.signalr4j.client.SignalRFuture;
 import com.github.signalr4j.client.StateChangedCallback;
 import com.github.signalr4j.client.http.Request;
 import com.github.signalr4j.client.transport.ClientTransport;
+import com.github.signalr4j.client.transport.NegotiationResponse;
 
 public class MockConnection implements ConnectionBase {
 
@@ -81,6 +82,12 @@ public class MockConnection implements ConnectionBase {
         return "$CONNECTIONID";
     }
 
+    @Override
+    public NegotiationResponse getConnectionInfo() {
+      return null;
+    }
+
+    
     @Override
     public String getQueryString() {
         return "val=1";

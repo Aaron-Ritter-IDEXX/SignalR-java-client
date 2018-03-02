@@ -14,6 +14,7 @@ import com.google.gson.JsonParser;
 
 import com.github.signalr4j.client.http.Request;
 import com.github.signalr4j.client.transport.ClientTransport;
+import com.github.signalr4j.client.transport.NegotiationResponse;
 
 public interface ConnectionBase {
 
@@ -104,7 +105,12 @@ public interface ConnectionBase {
      * Returns the connection token
      */
     String getConnectionToken();
-
+    
+    /**
+     * Returns the connection information
+     */
+    NegotiationResponse getConnectionInfo();
+    
     /**
      * Returns the connection Id
      */

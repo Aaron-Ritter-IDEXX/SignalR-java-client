@@ -52,6 +52,10 @@ public abstract class HttpClientTransport implements ClientTransport {
         mLogger = logger;
     }
 
+    public Logger getLogger() {
+      return mLogger;
+    }
+    
     @Override
     public SignalRFuture<NegotiationResponse> negotiate(final ConnectionBase connection) {
         log("Start the negotiation with the server", LogLevel.Information);
