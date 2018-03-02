@@ -83,7 +83,7 @@ public abstract class HttpClientTransport implements ClientTransport {
                     log("Read response data to the end", LogLevel.Verbose);
                     String negotiationContent = response.readToEnd();
 
-                    log("Trigger onSuccess with negotiation data: " + negotiationContent, LogLevel.Verbose);
+                    log("Trigger onSuccess with negotiation data: " + negotiationContent, LogLevel.Information);
                     negotiationFuture.setResult(new NegotiationResponse(negotiationContent, connection.getJsonParser()));
 
                 } catch (Throwable e) {
