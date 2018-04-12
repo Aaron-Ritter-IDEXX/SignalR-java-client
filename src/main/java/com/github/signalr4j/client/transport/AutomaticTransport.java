@@ -15,6 +15,7 @@ import com.github.signalr4j.client.ErrorCallback;
 import com.github.signalr4j.client.LogLevel;
 import com.github.signalr4j.client.SignalRFuture;
 import com.github.signalr4j.client.ConnectionBase;
+import com.github.signalr4j.client.InvalidStateException;
 import com.github.signalr4j.client.NullLogger;
 import com.github.signalr4j.client.http.HttpConnection;
 
@@ -163,8 +164,10 @@ public class AutomaticTransport extends HttpClientTransport {
     public SignalRFuture<Void> abort(ConnectionBase connection) {
         if (mRealTransport != null) {
             return mRealTransport.abort(connection);
+        } else {
+          SignalRFuture<Void> future = new SignalRFuture<>();
+          future.triggerError(new Exception("Not connected."));
+          return future;
         }
-
-        return null;
     }
 }

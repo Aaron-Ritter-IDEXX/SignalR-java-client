@@ -478,7 +478,7 @@ public class Connection implements ConnectionBase {
             log("Stopping the connection", LogLevel.Information);
             mAborting = true;
 
-            log("Starting abort operation", LogLevel.Verbose);
+            log(String.format("Starting abort operation, transport %s", mTransport.getClass().getName()), LogLevel.Verbose);
             mAbortFuture = mTransport.abort(this);
 
             final Connection that = this;
