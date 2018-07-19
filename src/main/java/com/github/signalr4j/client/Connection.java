@@ -6,6 +6,7 @@ See License.txt in the project root for license information.
 
 package com.github.signalr4j.client;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class Connection implements ConnectionBase {
 
     private Runnable mOnConnectionSlow;
 
-    private Runnable mOnClosed;
+    private final ArrayList<Runnable> mOnClosed = new ArrayList<Runnable>();
 
     private StateChangedCallback mOnStateChanged;
 
@@ -263,7 +264,10 @@ public class Connection implements ConnectionBase {
 
     @Override
     public void closed(Runnable handler) {
-        mOnClosed = handler;
+        if(handler == null)
+        	mOnClosed.clear();
+		else
+			mOnClosed.add(handler);
     }
 
     @Override
@@ -813,9 +817,8 @@ public class Connection implements ConnectionBase {
      * Triggers the Closed event
      */
     protected void onClosed() {
-        if (mOnClosed != null) {
-            mOnClosed.run();
-        }
+        for(Runnable handler : mOnClosed)
+        	handler.run();
     }
 
     /**

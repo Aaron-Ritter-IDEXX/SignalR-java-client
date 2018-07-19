@@ -32,13 +32,15 @@ public class UpdateableCancellableFuture<V> extends SignalRFuture<V> {
     }
 
     @Override
-    public void cancel() {
+    public boolean cancel() {
+    	boolean cancelled;
         synchronized (mSync) {
-            super.cancel();
+        	cancelled = super.cancel();
             if (mFuture != null) {
                 mFuture.cancel();
                 mFuture = null;
             }
         }
+        return cancelled;
     }
 }
