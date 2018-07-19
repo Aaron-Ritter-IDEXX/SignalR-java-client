@@ -37,6 +37,8 @@ public class Connection implements ConnectionBase {
     private String mConnectionToken;
 
     private String mConnectionId;
+    
+    private NegotiationResponse mConnectionInfo;
 
     private String mMessageId;
 
@@ -177,6 +179,11 @@ public class Connection implements ConnectionBase {
     @Override
     public String getConnectionToken() {
         return mConnectionToken;
+    }
+    
+    @Override
+    public NegotiationResponse getConnectionInfo() {
+        return mConnectionInfo;
     }
 
     @Override
@@ -369,7 +376,7 @@ public class Connection implements ConnectionBase {
                             mConnectionFuture.triggerError(err);
                             return;
                         }
-
+                        mConnectionInfo = negotiationResponse;
                         mConnectionId = negotiationResponse.getConnectionId();
                         mConnectionToken = negotiationResponse.getConnectionToken();
                         log("ConnectionId: " + mConnectionId, LogLevel.Verbose);
@@ -471,7 +478,7 @@ public class Connection implements ConnectionBase {
             log("Stopping the connection", LogLevel.Information);
             mAborting = true;
 
-            log("Starting abort operation", LogLevel.Verbose);
+            log(String.format("Starting abort operation, transport %s", mTransport.getClass().getName()), LogLevel.Verbose);
             mAbortFuture = mTransport.abort(this);
 
             final Connection that = this;
